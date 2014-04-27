@@ -1,0 +1,12 @@
+<div class="game-ui">
+    <div id="TITLE">Game UI</div>
+    <div id="CONNECT" data-ng-show="!serverConnected">
+        <input  id="ADDRESS"    data-ng-model="serverAddress"    type="text" placeholder="localhost"/>
+        <input  id="PORT"       data-ng-model="serverPort"       type="text" placeholder="80"/>
+        <button id="SUBMIT"     data-ng-click="connect()">Connect</button>
+    </div>
+    <div id="DISCONNECT" data-ng-show="serverConnected">
+        <button id="SUBMIT"     data-ng-click="disconnect()">Disconnect</button>
+    </div>
+    
+</div>

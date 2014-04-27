@@ -1,0 +1,45 @@
+.game-ui                                                                        {
+    
+}
+
+.game-ui #TITLE                                                                 {
+    margin:         2px;
+}
+
+.game-ui #CONNECT                                                               {
+    display:        inline-flex;
+    flex-direction: row;
+}
+
+.game-ui #CONNECT > *                                                           {
+    margin:         2px;
+    box-sizing:     content-box;
+    border:         #000 solid 1px;
+}
+
+.game-ui #CONNECT #ADDRESS                                                      {
+    width:          64ch;
+}
+
+.game-ui #CONNECT #PORT                                                         {
+    width:          6ch;
+}
+
+.game-ui #CONNECT #SUBMIT                                                       {
+    width:          12ch;
+}
+
+.game-ui #DISCONNECT                                                            {
+    display:        inline-flex;
+    flex-direction: row;
+}
+
+.game-ui #DISCONNECT > *                                                        {
+    margin:         2px;
+    box-sizing:     content-box;
+    border:         #000 solid 1px;
+}
+
+.game-ui #DISCONNECT #SUBMIT                                                    {
+    width:          12ch;
+}
