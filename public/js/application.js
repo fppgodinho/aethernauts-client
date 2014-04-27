@@ -18,6 +18,7 @@ aethernauts.directive('gameUi', [function()                                     
             $scope.serverAddress    = '';
             $scope.serverPort       = 81;
             $scope.serverConnected  = server.connected;
+            $scope.serverName       = '';
             
             $scope.profile          = null;
             
@@ -39,7 +40,6 @@ aethernauts.directive('gameUi', [function()                                     
             };
             
             $scope.disconnect       = function ()                               {
-                $scope.profile      = null;
                 server.disconnect();
             };
             
@@ -63,7 +63,12 @@ aethernauts.directive('gameUi', [function()                                     
             $scope.$watch(function(){ return server.connected; }, function(nv, ov){
                 if (nv === ov) return;
                 $scope.serverConnected  = nv;
-                
+                $scope.profile          = $scope.serverConnected?$scope.profile:null;
+            });
+            
+            $scope.$watch(function(){ return server.name; }, function(nv, ov)   {
+                if (nv === ov) return;
+                $scope.serverName       = server.name;
             });
             
             function getDefault(list)                                           {

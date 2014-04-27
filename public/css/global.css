@@ -43,6 +43,11 @@
     border:         #000 solid 1px;
 }
 
+.game-ui #DISCONNECT #NAME                                                      {
+    display:        inline-block;
+    border:         none;
+}
+
 .game-ui #DISCONNECT #SUBMIT                                                    {
     width:          12ch;
 }
