@@ -2,8 +2,11 @@
     
 }
 
-.game-ui #TITLE                                                                 {
-    margin:         2px;
+.game-ui #SERVER                                                                 {
+    display:            flex;
+    flex-direction:     row;
+    justify-content:    flex-end;
+    margin:             2px;
 }
 
 .game-ui #CONNECT                                                               {
@@ -43,3 +46,31 @@
 .game-ui #DISCONNECT #SUBMIT                                                    {
     width:          12ch;
 }
+
+
+.game-ui #SWITCH_REGISTER                                                       {
+    width:          12ch;
+}
+
+.game-ui #LOGIN                                                                 {
+    display:        inline-flex;
+    flex-direction: column;
+}
+
+.game-ui #LOGIN > *                                                             {
+    margin:         2px;
+    box-sizing:     content-box;
+    border:         #000 solid 1px;
+}
+
+.game-ui #REGISTER                                                              {
+    display:        inline-flex;
+    flex-direction: column;
+}
+
+.game-ui #REGISTER > *                                                          {
+    margin:         2px;
+    box-sizing:     content-box;
+    border:         #000 solid 1px;
+}
+

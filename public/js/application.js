@@ -18,6 +18,16 @@ aethernauts.directive('gameUi', [function()                                     
             $scope.serverAddress    = '';
             $scope.serverPort       = 81;
             $scope.serverConnected  = server.connected;
+            
+            $scope.profile          = null;
+            
+            $scope.username         = 'admin';
+            $scope.password         = 'teste';
+            $scope.nameFirst        = '';
+            $scope.nameLast         = '';
+            $scope.email            = '';
+            
+            
             $scope.connect          = function ()                               {
                 server.connect($scope.serverAddress, $scope.serverPort,
                 function()                                                      {
@@ -29,12 +39,25 @@ aethernauts.directive('gameUi', [function()                                     
             };
             
             $scope.disconnect       = function ()                               {
+                $scope.profile      = null;
                 server.disconnect();
-                console.log('Server connection closed');
             };
             
-            $scope.login            = function (username, password)             {
+            $scope.login            = function ()                               {
+                $scope.profile      = null;
                 
+                server.login($scope.username, $scope.password, function(message){
+                    if (!message.error && message.result)                       {
+                        $scope.profile          = message.result;
+                        var defaultEmail        = getDefault($scope.profile.identity.emails);
+                        $scope.password         = '';
+                        $scope.username         = $scope.profile.credentials.username;
+                        $scope.nameFirst        = $scope.profile.identity.name.first;
+                        $scope.nameLast         = $scope.profile.identity.name.last;
+                        $scope.email            = defaultEmail?defaultEmail.address:'';
+                    }
+                    console.log('Logedin?', message);
+                });
             };
             
             $scope.$watch(function(){ return server.connected; }, function(nv, ov){
@@ -42,6 +65,12 @@ aethernauts.directive('gameUi', [function()                                     
                 $scope.serverConnected  = nv;
                 
             });
+            
+            function getDefault(list)                                           {
+                if (list && list.length) for (var i in list) if (list[i].default) return list[i];
+                return null;
+            }
+            
         }]
     };
 }]);
@@ -61,9 +90,12 @@ aethernauts.directive('gameViewport', [function()                               
 }]);
 
 aethernauts.service('server', ['$q', '$rootScope', function($q, $rootScope)     {
+    var salt            = '';
+    var token           = '';
     var ws              = null;
     var server          = {};
     server.connected    = false;
+    server.name         = '';
     server.connect      = function (address, port, onConnect, onDisconnect)     {
         address         = address || 'localhost';
         port            = port || 80;
@@ -81,7 +113,7 @@ aethernauts.service('server', ['$q', '$rootScope', function($q, $rootScope)     
         };
 
         ws.onmessage    = function(message)                                     {
-            console.log(JSON.parse(message.data));
+            handleMessage(message.data);
         };
         
         return defer;
@@ -91,6 +123,42 @@ aethernauts.service('server', ['$q', '$rootScope', function($q, $rootScope)     
         if (!server.connected) return;
         ws.close();
     };
+    
+    server.login        = function (username, password, callback)               {
+        if (!server.connected) return;
+        password = CryptoJS.MD5(CryptoJS.MD5(password + '_' + salt).toString() + token).toString();
+        ws.send(JSON.stringify({type:'login', username:username, password:password, callbackID:addCallback(callback)}));
+    };
+    
+    function handleMessage(message)                                             {
+        message     = JSON.parse(message);
+        $rootScope.$apply(function()                                            {
+            switch(message.type)                                                {
+                case 'session':
+                    if (message.state == 'start')                               {
+                        token       = message.token;
+                        salt        = message.salt;
+                        server.name = message.name;
+                    }
+                    break;
+                case 'response':
+                    message.callbackID = +message.callbackID;
+                    if (message.callbackID < callbacks.length && callbacks[message.callbackID]){
+                        var callback    = callbacks[message.callbackID];
+                        callbacks[message.callbackID]   = null;
+                        callback(message);
+                    }
+                    break;
+                default: break;
+            }
+        });
+    }
+    
+    var callbacks = [];
+    function addCallback(callback)                                              {
+        callbacks.push(callback);
+        return callbacks.length - 1;
+    }
     
     return server;
 }]);
