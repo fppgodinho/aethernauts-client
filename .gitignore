@@ -25,3 +25,6 @@ build/Release
 node_modules
 /nbproject/private/
 /data/
+/public/css/
+/public/html/
+/public/js/
