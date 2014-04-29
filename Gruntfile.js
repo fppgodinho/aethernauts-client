@@ -25,8 +25,10 @@ module.exports = function(grunt)                                                
         compass: {
             css: {
                 options: {
-                    environment:    'production',
-                    config:         'config/compass.rb'
+                    config:             'config/compass.rb',
+                    environment:        'production',
+                    outputStyle:        'nested',
+                    noLineComments:     true
                 }
             },
         },

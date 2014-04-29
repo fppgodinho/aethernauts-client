@@ -3,84 +3,25 @@
     Author     : Cain
 */
 
-document                                                                        {
-    padding:    0px;
-    margin:     0px;
-}
+@import "compass";
+@import "compass/css3";
+@import "compass/css3/appearance";
+@import "compass/css3/box";
+@import "compass/css3/columns";
+@import "compass/css3/font-face";
+@import "compass/css3/text-shadow";
+@import "compass/css3/user-interface";
+@import "compass/layout/stretching";
+@import "compass/typography/text/ellipsis";
 
-.game-ui                                                                        {
-    #SERVER                                                                     {
-        display:            flex;
-        flex-direction:     row;
-        justify-content:    flex-end;
-        margin:             2px;
-    }
-    
-    #CONNECT                                                                    {
-        display:            inline-flex;
-        flex-direction:     row;
-        
-        *                                                                       {
-            margin:         2px;
-            box-sizing:     content-box;
-            border:         #000 solid 1px;
-        }
-        
-        #ADDRESS                                                                {
-            width:          64ch;
-        }
-        
-        #PORT                                                                   {
-            width:          6ch;
-        }
-        
-        #SUBMIT                                                                 {
-            width:          12ch;
-        }
-    }
-    
-    #DISCONNECT                                                                 {
-        display:            inline-flex;
-        flex-direction:     row;
-        *                                                                       {
-            margin:         2px;
-            box-sizing:     content-box;
-            border:         #000 solid 1px;
-        }
+@import "partials/global";
 
-        #NAME                                                                   {
-            display:        inline-block;
-            border:         none;
-        }
+// -----------------------------------------------------------------------------
+//{ region PLUGINS/DIRECTIVES
+@import "partials/ui";
+//} endregion
+// -----------------------------------------------------------------------------
 
-        #SUBMIT                                                                 {
-            width:          12ch;
-        }
-    }
-    
-    #SWITCH_REGISTER                                                            {
-        width:              12ch;
-    }
-    
-    #LOGIN                                                                      {
-        display:            inline-flex;
-        flex-direction:     column;
-        
-        *                                                                       {
-            margin:         2px;
-            box-sizing:     content-box;
-            border:         #000 solid 1px;
-        }
-    }
-    
-    #REGISTER                                                                   {
-        display:        inline-flex;
-        flex-direction: column;
-        *                                                                       {
-            margin:         2px;
-            box-sizing:     content-box;
-            border:         #000 solid 1px;
-        }
-    }
-}
+
+
 

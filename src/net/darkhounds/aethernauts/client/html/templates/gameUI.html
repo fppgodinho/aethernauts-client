@@ -1,33 +1,46 @@
 <div class="game-ui">
-    <div id="SERVER">
-        <div id="CONNECT" data-ng-show="!serverConnected">
-            <input  id="ADDRESS"    data-ng-model="serverAddress"   type="text" placeholder="localhost"/>
-            <input  id="PORT"       data-ng-model="serverPort"      type="text" placeholder="80"/>
-            <button id="SUBMIT"     data-ng-click="connect()">Connect</button>
-        </div>
+    <div id="TOP">
+        <div class="server">
+            <div id="CONNECT" data-ng-show="!serverConnected">
+                <input  id="ADDRESS"    data-ng-model="serverAddress"   type="text" placeholder="localhost"/>
+                <input  id="PORT"       data-ng-model="serverPort"      type="text" placeholder="80"/>
+                <button id="SUBMIT"     data-ng-click="connect()">Connect</button>
+            </div>
 
-        <div id="DISCONNECT" data-ng-show="serverConnected">
-            <div id="NAME">Server: {{serverName}}</div>
-            <button id="SUBMIT"     data-ng-click="disconnect()">Disconnect</button>
+            <div id="DISCONNECT" data-ng-show="serverConnected">
+                <div id="NAME">Server: {{serverName}}</div>
+                <button id="SUBMIT"     data-ng-click="disconnect()">Disconnect</button>
+            </div>
         </div>
     </div>
-    
-    <div data-ng-show="serverConnected && !profile">
-        <button id="SWITCH_REGISTER"   data-ng-click="register = !register">{{register?'Login':'Register'}}</button>
-        <div id="LOGIN" data-ng-show="!register">
-            <input  id="USERNAME"   data-ng-model="username"        type="text"     placeholder="Username"/>
-            <input  id="PASSWORD"   data-ng-model="password"        type="password" placeholder="Password"/>
-            <button id="SUBMIT"     data-ng-click="login()">Login</button>
+    <div id="MIDDLE">
+        <div id="LEFT">
+            <div class="auth" data-ng-show="serverConnected">
+                <div id="LOGIN" data-ng-show="!profile && !register">
+                    <button id="SWITCH_REGISTER"   data-ng-click="register = true">Register</button>
+                    <input  id="USERNAME"   data-ng-model="username"        type="text"     placeholder="Username"/>
+                    <input  id="PASSWORD"   data-ng-model="password"        type="password" placeholder="Password"/>
+                    <button id="SUBMIT"     data-ng-click="login()">Submit</button>
+                </div>
+                <div id="REGISTER" data-ng-show="!profile && register">
+                    <button id="SWITCH_REGISTER"   data-ng-click="register = false">Login</button>
+                    <input  id="USERNAME"   data-ng-model="username"        type="text" placeholder="Username"/>
+                    <input  id="PASSWORD"   data-ng-model="password"        type="text" placeholder="Password"/>
+                    <input  id="PASSWORD2"  data-ng-model="password2"       type="text" placeholder="Confirm Password"/>
+                    <input  id="NAME_FIRST" data-ng-model="nameFirst"       type="text" placeholder="First Name"/>
+                    <input  id="NAME_LAST"  data-ng-model="nameLast"        type="text" placeholder="Last Name"/>
+                    <input  id="EMAIL"      data-ng-model="email"           type="text" placeholder="Email"/>
+                    <input  id="EMAIL2"     data-ng-model="email2"          type="text" placeholder="Confirm Email"/>
+                    <button id="SUBMIT"     data-ng-click="register()">Submit</button>
+                </div>
+                <div id="LOGOUT" data-ng-show="profile">
+                    <button id="SUBMIT"     data-ng-click="logout()">Logout</button>
+                    <div>{{profile.identity.name.first}}</div>
+                </div>
+            </div>
         </div>
-        <div id="REGISTER" data-ng-show="register">
-            <input  id="USERNAME"   data-ng-model="username"        type="text" placeholder="Username"/>
-            <input  id="PASSWORD"   data-ng-model="password"        type="text" placeholder="Password"/>
-            <input  id="PASSWORD2"  data-ng-model="password2"       type="text" placeholder="Confirm Password"/>
-            <input  id="NAME_FIRST" data-ng-model="nameFirst"       type="text" placeholder="First Name"/>
-            <input  id="NAME_LAST"  data-ng-model="nameLast"        type="text" placeholder="Last Name"/>
-            <input  id="EMAIL"      data-ng-model="email"           type="text" placeholder="Email"/>
-            <input  id="EMAIL2"     data-ng-model="email2"          type="text" placeholder="Confirm Email"/>
-            <button id="SUBMIT"     data-ng-click="register()">Submit</button>
-        </div>
+        <div id="CENTER"></div>
+        <div id="RIGHT"></div>
     </div>
+    <div id="BOTTOM"></div>
 </div>

@@ -48,7 +48,7 @@ aethernaut.directive('gameUi', [function()                                     {
                         $scope.nameLast         = $scope.profile.identity.name.last;
                         $scope.email            = defaultEmail?defaultEmail.address:'';
                     }
-                    console.log('Logedin?', message);
+                    console.log('Logedin?', $scope.profile);
                 });
             };
             
