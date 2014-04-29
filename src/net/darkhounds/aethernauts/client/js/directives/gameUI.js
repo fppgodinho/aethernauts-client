@@ -1,15 +1,19 @@
-'use strict';
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 
-var aethernaut = angular.module('aethernaut.darkhounds.net', []);
+var aethernauts = angular.module('aethernauts.darkhounds.net', []);
 
-aethernaut.directive('gameUi', [function()                                     {
+aethernauts.directive('gameUi', [function()                                     {
     return {
         scope:      {
             
         },
         transcode:      true,
         replace:        true,
-        templateUrl:    'html/templates/gameUI.html',
+        templateUrl:    'html/views/gameUI.html',
         controller:     ['$scope', 'server', function($scope, server)           {
             $scope.serverAddress    = '';
             $scope.serverPort       = 81;
@@ -76,21 +80,21 @@ aethernaut.directive('gameUi', [function()                                     {
     };
 }]);
 
-aethernaut.directive('gameViewport', [function()                                {
+aethernauts.directive('gameViewport', [function()                               {
     return {
         scope:      {
             
         },
         transcode:      true,
         replace:        true,
-        templateUrl:    'html/templates/gameViewport.html',
+        templateUrl:    'html/views/gameViewport.html',
         controller:     ['$scope', function($scope)                             {
             
         }]
     };
 }]);
 
-aethernaut.service('server', ['$q', '$rootScope', function($q, $rootScope)      {
+aethernauts.service('server', ['$q', '$rootScope', function($q, $rootScope)     {
     var salt            = '';
     var token           = '';
     var ws              = null;
@@ -163,3 +167,4 @@ aethernaut.service('server', ['$q', '$rootScope', function($q, $rootScope)      
     
     return server;
 }]);
+
