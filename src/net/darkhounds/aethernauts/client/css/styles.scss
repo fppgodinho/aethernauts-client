@@ -7,3 +7,80 @@ document                                                                        
     padding:    0px;
     margin:     0px;
 }
+
+.game-ui                                                                        {
+    #SERVER                                                                     {
+        display:            flex;
+        flex-direction:     row;
+        justify-content:    flex-end;
+        margin:             2px;
+    }
+    
+    #CONNECT                                                                    {
+        display:            inline-flex;
+        flex-direction:     row;
+        
+        *                                                                       {
+            margin:         2px;
+            box-sizing:     content-box;
+            border:         #000 solid 1px;
+        }
+        
+        #ADDRESS                                                                {
+            width:          64ch;
+        }
+        
+        #PORT                                                                   {
+            width:          6ch;
+        }
+        
+        #SUBMIT                                                                 {
+            width:          12ch;
+        }
+    }
+    
+    #DISCONNECT                                                                 {
+        display:            inline-flex;
+        flex-direction:     row;
+        *                                                                       {
+            margin:         2px;
+            box-sizing:     content-box;
+            border:         #000 solid 1px;
+        }
+
+        #NAME                                                                   {
+            display:        inline-block;
+            border:         none;
+        }
+
+        #SUBMIT                                                                 {
+            width:          12ch;
+        }
+    }
+    
+    #SWITCH_REGISTER                                                            {
+        width:              12ch;
+    }
+    
+    #LOGIN                                                                      {
+        display:            inline-flex;
+        flex-direction:     column;
+        
+        *                                                                       {
+            margin:         2px;
+            box-sizing:     content-box;
+            border:         #000 solid 1px;
+        }
+    }
+    
+    #REGISTER                                                                   {
+        display:        inline-flex;
+        flex-direction: column;
+        *                                                                       {
+            margin:         2px;
+            box-sizing:     content-box;
+            border:         #000 solid 1px;
+        }
+    }
+}
+
