@@ -6,7 +6,7 @@ aethernauts.directive('ui', [function()                                         
         transcode:      true,
         replace:        true,
         templateUrl:    'html/templates/ui.html',
-        controller:     ['$scope', 'server', 'session', function($scope, server, session) {
+        controller:     ['$scope', 'server', function($scope, server)           {
             $scope.connected        = false;
             
             $scope.$watch(function(){ return server.isConnected(); }, function(nv, ov){

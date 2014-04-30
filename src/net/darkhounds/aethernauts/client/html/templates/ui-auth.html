@@ -1,12 +1,12 @@
 <div class="auth">
-    <div id="LOGIN" data-ng-show="!profile && !register">
-        <button id="SWITCH_REGISTER"   data-ng-click="register = true">Register</button>
+    <div id="LOGIN" data-ng-show="!profile && !showRegister">
+        <button id="SWITCH_REGISTER"   data-ng-click="showRegister = true">Register</button>
         <input  id="USERNAME"   data-ng-model="username"        type="text"     placeholder="Username"/>
         <input  id="PASSWORD"   data-ng-model="password"        type="password" placeholder="Password"/>
         <button id="SUBMIT"     data-ng-click="login()">Submit</button>
     </div>
-    <div id="REGISTER" data-ng-show="!profile && register">
-        <button id="SWITCH_REGISTER"   data-ng-click="register = false">Login</button>
+    <div id="REGISTER" data-ng-show="!profile && showRegister">
+        <button id="SWITCH_REGISTER"   data-ng-click="showRegister = false">Login</button>
         <input  id="USERNAME"   data-ng-model="username"        type="text" placeholder="Username"/>
         <input  id="PASSWORD"   data-ng-model="password"        type="text" placeholder="Password"/>
         <input  id="PASSWORD2"  data-ng-model="password2"       type="text" placeholder="Confirm Password"/>
