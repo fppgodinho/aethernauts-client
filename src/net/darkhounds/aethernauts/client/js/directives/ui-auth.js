@@ -1,17 +1,12 @@
-aethernaut.directive('gameUi', [function()                                     {
+aethernauts.directive('uiAuth', [function()                                      {
     return {
         scope:      {
             
         },
         transcode:      true,
         replace:        true,
-        templateUrl:    'html/templates/gameUI.html',
-        controller:     ['$scope', 'server', function($scope, server)           {
-            $scope.serverAddress    = '';
-            $scope.serverPort       = 81;
-            $scope.serverConnected  = server.connected;
-            $scope.serverName       = '';
-            
+        templateUrl:    'html/templates/ui-auth.html',
+        controller:     ['$scope', 'server', 'session', function($scope, server, session) {
             $scope.profile          = null;
             
             $scope.username         = 'admin';
@@ -19,21 +14,6 @@ aethernaut.directive('gameUi', [function()                                     {
             $scope.nameFirst        = '';
             $scope.nameLast         = '';
             $scope.email            = '';
-            
-            
-            $scope.connect          = function ()                               {
-                server.connect($scope.serverAddress, $scope.serverPort,
-                function()                                                      {
-                    console.log('Server connection opened');
-                },
-                function()                                                      {
-                    console.log('Server connection closed');
-                });
-            };
-            
-            $scope.disconnect       = function ()                               {
-                server.disconnect();
-            };
             
             $scope.login            = function ()                               {
                 $scope.profile      = null;
@@ -47,20 +27,17 @@ aethernaut.directive('gameUi', [function()                                     {
                         $scope.nameFirst        = $scope.profile.identity.name.first;
                         $scope.nameLast         = $scope.profile.identity.name.last;
                         $scope.email            = defaultEmail?defaultEmail.address:'';
+                    } else if (message.error)                                   {
+                        alert(message.error);
                     }
-                    console.log('Logedin?', $scope.profile);
+                    session.setProfile($scope.profile);
                 });
             };
             
-            $scope.$watch(function(){ return server.connected; }, function(nv, ov){
+            $scope.$watch(function(){ return session.getProfile(); }, function(nv, ov){
                 if (nv === ov) return;
-                $scope.serverConnected  = nv;
-                $scope.profile          = $scope.serverConnected?$scope.profile:null;
-            });
-            
-            $scope.$watch(function(){ return server.name; }, function(nv, ov)   {
-                if (nv === ov) return;
-                $scope.serverName       = server.name;
+                $scope.profile          = nv;
+                console.log('Profile:', $scope.profile);
             });
             
             function getDefault(list)                                           {

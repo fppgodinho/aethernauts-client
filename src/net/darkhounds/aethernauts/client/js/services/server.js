@@ -1,66 +1,66 @@
-aethernaut.service('server', ['$q', '$rootScope', function($q, $rootScope)      {
-    var salt            = '';
-    var token           = '';
+aethernauts.service('server', ['renderer', 'session', function(renderer, session) {
     var ws              = null;
     var server          = {};
-    server.connected    = false;
-    server.name         = '';
+    
+    var name            = '';
+    var connected       = false;
+    
+    server.isConnected  = function() { return connected;                        }
+    server.getName      = function() { return name;                             }
     server.connect      = function (address, port, onConnect, onDisconnect)     {
         address         = address || 'localhost';
         port            = port || 80;
         
-        var defer       = $q.defer();
-        if (server.connected) server.disconnect();
+        if (connected) server.disconnect();
         ws              = new WebSocket("ws://" + address + ':' + port);
         ws.onopen       = function()                                            {
-            server.connected = true;
-            if (onConnect) $rootScope.$apply(onConnect());
+            connected   = true;
+            if (onConnect) onConnect();
+            renderer.render();
         };
         ws.onclose      = function()                                            {
-            server.connected    = false;
-            if (onDisconnect) $rootScope.$apply(onDisconnect());
+            connected   = false;
+            session.reset();
+            if (onDisconnect) onDisconnect();
+            renderer.render();
         };
 
         ws.onmessage    = function(message)                                     {
             handleMessage(message.data);
+            renderer.render();
         };
-        
-        return defer;
     };
     
     server.disconnect   = function ()                                           {
-        if (!server.connected) return;
+        if (!connected) return;
         ws.close();
     };
     
-    server.login        = function (username, password, callback)               {
-        if (!server.connected) return;
-        password = CryptoJS.MD5(CryptoJS.MD5(password + '_' + salt).toString() + token).toString();
+    server.login    = function (username, password, callback)               {
+        if (!connected) return;
+        password    = CryptoJS.MD5(CryptoJS.MD5(password + '_' + session.getSalt()).toString() + session.getToken()).toString();
         ws.send(JSON.stringify({type:'login', username:username, password:password, callbackID:addCallback(callback)}));
     };
     
     function handleMessage(message)                                             {
         message     = JSON.parse(message);
-        $rootScope.$apply(function()                                            {
-            switch(message.type)                                                {
-                case 'session':
-                    if (message.state == 'start')                               {
-                        token       = message.token;
-                        salt        = message.salt;
-                        server.name = message.name;
-                    }
-                    break;
-                case 'response':
-                    message.callbackID = +message.callbackID;
-                    if (message.callbackID < callbacks.length && callbacks[message.callbackID]){
-                        var callback    = callbacks[message.callbackID];
-                        callbacks[message.callbackID]   = null;
-                        callback(message);
-                    }
-                    break;
-                default: break;
-            }
-        });
+        switch(message.type)                                                    {
+            case 'session':
+                if (message.state == 'start')                                   {
+                    name        = message.name;
+                    session.set(message.salt, message.token);
+                }
+                break;
+            case 'response':
+                message.callbackID = +message.callbackID;
+                if (message.callbackID < callbacks.length && callbacks[message.callbackID]){
+                    var callback    = callbacks[message.callbackID];
+                    callbacks[message.callbackID]   = null;
+                    callback(message);
+                }
+                break;
+            default: break;
+        }
     }
     
     var callbacks = [];
