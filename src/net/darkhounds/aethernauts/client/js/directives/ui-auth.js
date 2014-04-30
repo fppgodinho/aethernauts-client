@@ -59,6 +59,7 @@ aethernauts.directive('uiAuth', [function()                                     
                 };
 
                 $scope.logout           = function ()                           {
+                    $scope.showRegister     = false;
                     server.logout(function(message)                             {
                         if (message.error) alerts.add('simple', message.error.code, errors.getServerError(message.error.code, message.error.message));
                         else session.setProfile();
@@ -69,6 +70,7 @@ aethernauts.directive('uiAuth', [function()                                     
                     if (nv === ov) return;
                     if (!nv) reset();
                     $scope.profile          = nv;
+                    $scope.showRegister     = false;
                     console.log('Profile:', $scope.profile);
                 });
 
