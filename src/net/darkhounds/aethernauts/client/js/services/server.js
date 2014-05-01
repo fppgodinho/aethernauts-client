@@ -39,23 +39,39 @@ aethernauts.service('server', ['renderer', 'session', function(renderer, session
     server.register     = function (username, password, nameFirst, nameLast, email, callback) {
         if (!connected) return;
         password        = CryptoJS.MD5(password + '_' + session.getSalt()).toString();
-        ws.send(JSON.stringify({type:'register', username:username, password:password, nameFirst: nameFirst, nameLast: nameLast, email: email, callbackID:addCallback(callback)}));
+        ws.send(JSON.stringify({type: 'auth', action:'register', username:username, password:password, nameFirst: nameFirst, nameLast: nameLast, email: email, callbackID:addCallback(callback)}));
     };
     
     server.login    = function (username, password, callback)                   {
         if (!connected) return;
         password    = CryptoJS.MD5(CryptoJS.MD5(password + '_' + session.getSalt()).toString() + session.getToken()).toString();
-        ws.send(JSON.stringify({type:'login', username:username, password:password, callbackID:addCallback(callback)}));
+        ws.send(JSON.stringify({type: 'auth', action:'login', username:username, password:password, callbackID:addCallback(callback)}));
     };
     
     server.logout    = function (callback)                                      {
         if (!connected) return;
-        ws.send(JSON.stringify({type:'logout', callbackID:addCallback(callback)}));
+        ws.send(JSON.stringify({type: 'auth', action:'logout', callbackID:addCallback(callback)}));
     };
+    
+    
+    server.getCharacters    = function (callback)                               {
+        if (!connected) return;
+        ws.send(JSON.stringify({type: 'characters', action:'list', callbackID:addCallback(callback)}));
+    };
+    
+    server.createCharacter  = function (firstname, lastname, callback)          {
+        if (!connected) return;
+        ws.send(JSON.stringify({type: 'characters', action:'create', firstname: firstname, lastname:lastname, callbackID:addCallback(callback)}));
+    };
+    
+    server.deleteCharacter  = function (character, callback)                    {
+        if (!connected) return;
+        ws.send(JSON.stringify({type: 'characters', action:'delete', character: character, callbackID:addCallback(callback)}));
+    };
+    
     
     function handleMessage(message)                                             {
         message     = JSON.parse(message);
-        
         switch(message.type)                                                    {
             case 'session':
                 if (message.state == 'start')                                   {

@@ -14,7 +14,7 @@ aethernauts.service('session', ['renderer', function(renderer)                  
         renderer.render();
     };
     session.getCharacter    = function() { return character;                    };
-    session.setCharacter    = function()                                        {
+    session.setCharacter    = function(v)                                       {
         if (v == character) return;
         character = v;
         renderer.render();
