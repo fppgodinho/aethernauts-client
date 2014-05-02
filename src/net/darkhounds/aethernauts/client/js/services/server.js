@@ -36,10 +36,10 @@ aethernauts.service('server', ['renderer', 'session', function(renderer, session
         ws.close();
     };
     
-    server.register     = function (username, password, nameFirst, nameLast, email, callback) {
+    server.register     = function (username, password, firstname, lastname, email, callback) {
         if (!connected) return;
         password        = CryptoJS.MD5(password + '_' + session.getSalt()).toString();
-        ws.send(JSON.stringify({type: 'auth', action:'register', username:username, password:password, nameFirst: nameFirst, nameLast: nameLast, email: email, callbackID:addCallback(callback)}));
+        ws.send(JSON.stringify({type: 'auth', action:'register', username:username, password:password, firstname:firstname, lastname: lastname, email: email, callbackID:addCallback(callback)}));
     };
     
     server.login    = function (username, password, callback)                   {
