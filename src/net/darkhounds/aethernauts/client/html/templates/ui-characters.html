@@ -1,7 +1,7 @@
 <div class="characters">
     <div id="LIST" data-ng-show="!character">
         <div>Characters:</div>
-        <select data-ng-model="character" data-ng-options="character.firstname for character in characters"></select>
+        <select data-ng-model="character" data-ng-options="character.identity.name.first for character in characters"></select>
     </div>
     <div id="ADD" data-ng-show="!character && characters.length < 3">
         <input type="text" data-ng-model="nameFirst" placeholder="First Name" />
@@ -9,15 +9,15 @@
         <button id="SUBMIT" data-ng-click="add()" data-ng-disabled="!nameFirst">New Character</button>
     </div>
     <div id="CHARACTER" data-ng-show="character">
-        <button id="SWITCH">Switch Character</button>
-        <div class="identity">{{character.firstname}}</div>
-        <div class="identity">{{character.lastname}}</div>
-        <div class="stat">{{character.stats.int}}</div>
-        <div class="stat">{{character.stats.wiz}}</div>
-        <div class="stat">{{character.stats.str}}</div>
-        <div class="stat">{{character.stats.agi}}</div>
-        <div class="stat">{{character.stats.sta}}</div>
-        <div class="stat">{{character.stats.luck}}</div>
+        <button id="SWITCH" data-ng-click="character=null">Switch Character</button>
+        <div class="identity">{{character.identity.name.first}}</div>
+        <div class="identity">{{character.identity.name.last}}</div>
+        <div class="stat">Int: {{character.stats.int}}</div>
+        <div class="stat">Wiz: {{character.stats.wiz}}</div>
+        <div class="stat">Str: {{character.stats.str}}</div>
+        <div class="stat">Agi: {{character.stats.agi}}</div>
+        <div class="stat">Sta: {{character.stats.sta}}</div>
+        <div class="stat">Luc: {{character.stats.luck}}</div>
         <button id="DELETE" data-ng-click="kill()">Kill Character</button>
     </div>
 </div>
