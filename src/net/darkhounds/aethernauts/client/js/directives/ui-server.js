@@ -8,7 +8,7 @@ aethernauts.directive('uiServer', [function()                                   
         templateUrl:    'html/templates/ui-server.html',
         controller:     ['$scope', 'server', function($scope, server)           {
             $scope.address      = '';
-            $scope.port         = 81;
+            $scope.port         = 42000;
             $scope.connected    = server.isConnected();
             $scope.name         = server.getName();
             

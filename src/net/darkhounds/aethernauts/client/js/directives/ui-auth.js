@@ -13,7 +13,7 @@ aethernauts.directive('uiAuth', [function()                                     
                 $scope.showRegister     = false;
                 
                 $scope.username         = 'admin';
-                $scope.password         = 'teste';
+                $scope.password         = 'test';
                 $scope.password2        = '';
                 $scope.nameFirst        = '';
                 $scope.nameLast         = '';
@@ -43,14 +43,15 @@ aethernauts.directive('uiAuth', [function()                                     
                 $scope.login            = function ()                           {
                     if ($scope.profile) return;
                     server.login($scope.username, $scope.password, function(message){
+                        console.log(message);
                         if (!message.error && message.result)                   {
                             var profile             = message.result;
-                            var defaultEmail        = getDefault(profile.identity.emails);
+                            // var defaultEmail        = getDefault(profile.identity.emails);
                             $scope.password         = '';
-                            $scope.username         = profile.credentials.username;
-                            $scope.nameFirst        = profile.identity.name.first;
-                            $scope.nameLast         = profile.identity.name.last;
-                            $scope.email            = defaultEmail?defaultEmail.address:'';
+                            $scope.username         = profile.username;
+                            $scope.nameFirst        = profile.firstName;
+                            $scope.nameLast         = profile.lastName;
+                            $scope.email            = profile.email;
                             session.setProfile(profile);
                         } else if (message.error) alerts.add('simple', message.error.code, errors.getServerError(message.error.code, message.error.message), function(choice) {
                             $scope.password         = '';
